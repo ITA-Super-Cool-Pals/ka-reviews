@@ -1,5 +1,5 @@
 # Base image
-FROM python:alpine
+FROM python:alpine3.20
 
 # Copy alle filer i den mappe hvor min Dockerfile er til /app mappen i mit image
 COPY . /app
