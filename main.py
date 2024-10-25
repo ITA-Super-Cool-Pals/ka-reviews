@@ -17,3 +17,5 @@ def get_reviews():
 if __name__ == '__main__':
     db_service.init()  # Ensure the database is initialized before running
     app.run(host='0.0.0.0', port=5000)
+
+    

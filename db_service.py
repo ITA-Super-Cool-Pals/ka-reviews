@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import requests
 
 
 # Get the database path from an environment variable, or use a default path
@@ -53,10 +54,16 @@ def read(id):
         cur.execute('SELECT * FROM reviews WHERE ReviewId = ?', (id,))
         row = cur.fetchone()
 
+        # /guests/id GET
+        # TODO: Change request URL when guest microservice is ready
+        guest_response = requests.get('http://guests:5000/guests/' + str(row[2]))
+
         if row is None:
             return None
 
-        review = {'ReviewId': row[0], 'RoomId': row[1], 'GuestId': row[2], 'Review': row[3], 'Rating': row[4]}
+        review = {'ReviewId': row[0], 'RoomId': row[1], 'Guest': guest_response.json()['name'], 'Review': row[3], 'Rating': row[4]}
+
+
 
     return review
 
