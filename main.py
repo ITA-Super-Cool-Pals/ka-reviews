@@ -12,6 +12,7 @@ def index():
 # Get all reviews
 @app.route('/reviews', methods=['GET'])
 def get_reviews():
+    
     return jsonify(db_service.read_all()), 200
 
 if __name__ == '__main__':

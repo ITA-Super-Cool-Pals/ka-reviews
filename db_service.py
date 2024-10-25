@@ -2,7 +2,6 @@ import sqlite3
 import os
 import requests
 
-
 # Get the database path from an environment variable, or use a default path
 DATABASE_DIR = os.environ.get('DATABASE_DIR', '/app')
 DATABASE_PATH = os.path.join(DATABASE_DIR, 'reviews.db')
@@ -62,8 +61,6 @@ def read(id):
             return None
 
         review = {'ReviewId': row[0], 'RoomId': row[1], 'Guest': guest_response.json()['name'], 'Review': row[3], 'Rating': row[4]}
-
-
 
     return review
 
