@@ -6,7 +6,7 @@ docker build -t ka-reviews
 ```
 
 ```
-docker run --rm -p 5003:5000 --name -ka-reviews -d ka-reviews
+docker run --rm -p 5003:5000 -v /path/to/db/dir:/app/app-db --name -ka-reviews -d ka-reviews
 ```
 
 ## API Endpoints

@@ -2,17 +2,17 @@ import sqlite3
 import os
 import requests
 
-# Get the database path from an environment variable, or use a default path
-DATABASE_DIR = os.environ.get('DATABASE_DIR', '/app')
-DATABASE_PATH = os.path.join(DATABASE_DIR, 'reviews.db')
+
+
+db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app-db', 'reviews.db')
+os.makedirs(os.path.dirname(db_path), exist_ok=True)
 
 
 def init():
     # Ensure that the 'orders_data' directory exists
-    if not os.path.exists(DATABASE_DIR):
-        os.makedirs(DATABASE_DIR)
 
-    with sqlite3.connect(DATABASE_PATH) as con:
+
+    with sqlite3.connect(db_path) as con:
 
         cur = con.cursor()
 
@@ -35,7 +35,7 @@ def init():
     con.commit()
 
 def read_all():
-    with sqlite3.connect(DATABASE_PATH) as con:
+    with sqlite3.connect(db_path) as con:
         cur = con.cursor()
         cur.execute('SELECT * FROM reviews')
         rows = cur.fetchall()
@@ -48,7 +48,7 @@ def read_all():
 
 
 def read(id):
-    with sqlite3.connect(DATABASE_PATH) as con:
+    with sqlite3.connect(db_path) as con:
         cur = con.cursor()
         cur.execute('SELECT * FROM reviews WHERE ReviewId = ?', (id,))
         row = cur.fetchone()
@@ -67,7 +67,7 @@ def read(id):
 
 def create(review):
     # Review should be a dictionary
-    with sqlite3.connect(DATABASE_PATH) as con:
+    with sqlite3.connect(db_path) as con:
         cur = con.cursor()
         cur.execute('''INSERT INTO reviews (RoomId, GuestId, Review, Rating) 
                     VALUES (:roomid,:guestid,:review,:rating)''', review)
