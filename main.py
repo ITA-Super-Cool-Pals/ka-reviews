@@ -1,4 +1,4 @@
-import db_service
+import db_service, requests
 from flask import Flask, jsonify
 
 db_service.init()
@@ -25,6 +25,6 @@ def get_review(id):
 
 if __name__ == '__main__':
     db_service.init()  # Ensure the database is initialized before running
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0')
 
     

@@ -1,4 +1,4 @@
-import sqlite3
+import sqlite3, logging
 import os
 import requests
 
@@ -53,12 +53,12 @@ def read(id):
         cur.execute('SELECT * FROM reviews WHERE ReviewId = ?', (id,))
         row = cur.fetchone()
 
-        guest_response = requests.get('http://ka-guests:5003/guests/1') #+ str(row[2]))
-
+        guest_response = requests.get('http://ka-guests:5000/guests/' + str(row[2]))
+        
         if row is None:
             return None
 
-        review = {'ReviewId': row[0], 'RoomId': row[1], 'Guest': 'test', 'Review': row[3], 'Rating': row[4]}
+        review = {'ReviewId': row[0], 'RoomId': row[1], 'Guest': guest_response.json()['name'], 'Review': row[3], 'Rating': row[4]}
 
     return review
 
