@@ -46,16 +46,14 @@ def read_all():
     
     return all_reviews
 
-
+# Read one revieew
 def read(id):
     with sqlite3.connect(db_path) as con:
         cur = con.cursor()
         cur.execute('SELECT * FROM reviews WHERE ReviewId = ?', (id,))
         row = cur.fetchone()
 
-        # /guests/id GET
-        # TODO: Change request URL when guest microservice is ready
-        guest_response = requests.get('http://guests:5000/guests/' + str(row[2]))
+        guest_response = requests.get('http://ka-guests:5003/guests/' + str(row[2]))
 
         if row is None:
             return None

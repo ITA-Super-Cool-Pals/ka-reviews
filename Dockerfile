@@ -7,6 +7,7 @@ COPY . /app
 # Skift til mappen /app (svarer til CD kommandoen)
 WORKDIR /app
 
+
 # Installer alle dependencies
 RUN pip install -r requirements.txt
 
