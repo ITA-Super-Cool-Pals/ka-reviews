@@ -82,7 +82,21 @@ def read_by_room(room_id):
 
     return all_reviews  
 
+# Get all reviews for a guest by guest ID  
+def read_by_guest(guest_id):
+    with sqlite3.connect(db_path) as con:
+        cur = con.cursor()
+        cur.execute('SELECT * FROM reviews WHERE GuestId = ?', (guest_id,))
+        rows = cur.fetchall()
 
+        res_url = 'http://ka-guests:5000/guests/' + str(guest_id)
+        guest = requests.get(res_url).json()
+
+
+
+        all_reviews = [{'ReviewId': row[0], 'RoomId': row[1], 'GuestName': guest['name'], 'Review': row[3], 'Rating': row[4]} for row in rows]
+
+    return all_reviews
 
 
 def create(review):

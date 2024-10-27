@@ -23,6 +23,30 @@ def get_review(id):
         return 'Review not found', 404
     return jsonify(review), 200
 
+
+# Get all reviews for a room
+@app.route('/reviews/room/<int:room_id>', methods=['GET'])
+def get_reviews_by_room(room_id):
+    
+    # check if room exists
+    room = requests.get('http://ka-rooms:5000/rooms/' + str(room_id))
+    if room.status_code != 200:
+        return 'Room not found', 404
+
+    reviews = db_service.read_by_room(room_id)
+    return jsonify(reviews), 200
+
+# get all reviews for a guest
+@app.route('/reviews/guest/<int:guest_id>', methods=['GET'])
+def get_reviews_by_guest(guest_id):
+    # check if guest exists
+    guest = requests.get('http://ka-guests:5000/guests/' + str(guest_id))
+    if guest.status_code != 200:
+        return 'Guest not found', 404
+    
+    reviews = db_service.read_by_guest(guest_id)
+    return jsonify(reviews), 200
+
 # Create a review
 @app.route('/reviews', methods=['POST'])
 def create_review():
