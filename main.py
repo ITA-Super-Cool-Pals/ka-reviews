@@ -28,8 +28,22 @@ def get_review(id):
 def create_review():
     review = request.get_json()
 
-    # Check if the guest already reviewed this room
+    # check if room exists
+    room = requests.get('http://ka-rooms:5000/rooms/' + str(review['RoomId']))
+    if room.status_code != 200:
+        return 'Room not found', 404
     
+    # check if guest exists
+    guest = requests.get('http://ka-guests:5000/guests/' + str(review['GuestId']))
+    if guest.status_code != 200:
+        return 'Guest not found', 404
+    
+    # Check if the guest already reviewed this room
+    reviews_for_room = db_service.read_by_room(review['RoomId'])
+    for r in reviews_for_room:
+        if r['GuestId'] == review['GuestId']:
+            return 'Guest already reviewed this room', 400
+
 
     db_service.create(review)
     return 'Review created', 201

@@ -84,8 +84,6 @@ def read_by_room(room_id):
 
 
 
-# Get all reviews from a guest by guest ID
-
 
 def create(review):
     # Review should be a dictionary
