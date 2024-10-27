@@ -73,7 +73,7 @@ def read_by_room(room_id):
 
         def get_guest_name(guest_id):
             for guest in guests:
-                if guest['GuestId'] == guest_id:
+                if guest['guestId'] == guest_id:
                     return guest['name']
             return 'Guest not found'
         
