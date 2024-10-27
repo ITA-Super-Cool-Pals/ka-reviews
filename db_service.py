@@ -78,7 +78,7 @@ def read_by_room(room_id):
             return 'Guest not found'
         
 
-        all_reviews = [{'ReviewId': row[0], 'RoomId': row[1], 'GuestName': get_guest_name(row[2]), 'Review': row[3], 'Rating': row[4]} for row in rows]
+        all_reviews = [{'ReviewId': row[0], 'RoomId': row[1], 'GuestId': row[2], 'Review': row[3], 'Rating': row[4]} for row in rows]
 
     return all_reviews  
 
@@ -104,7 +104,7 @@ def create(review):
     with sqlite3.connect(db_path) as con:
         cur = con.cursor()
         cur.execute('''INSERT INTO reviews (RoomId, GuestId, Review, Rating) 
-                    VALUES (:roomid,:guestid,:review,:rating)''', review)
+                    VALUES (:RoomId,:GuestId,:Review,:Rating)''', review)
     con.commit()
 
     return True

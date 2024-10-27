@@ -24,6 +24,7 @@ def get_review(id):
     return jsonify(review), 200
 
 
+# Not public
 # Get all reviews for a room
 @app.route('/reviews/room/<int:room_id>', methods=['GET'])
 def get_reviews_by_room(room_id):
@@ -36,6 +37,7 @@ def get_reviews_by_room(room_id):
     reviews = db_service.read_by_room(room_id)
     return jsonify(reviews), 200
 
+# Not public
 # get all reviews for a guest
 @app.route('/reviews/guest/<int:guest_id>', methods=['GET'])
 def get_reviews_by_guest(guest_id):
