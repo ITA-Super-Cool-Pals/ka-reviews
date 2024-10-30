@@ -2,7 +2,7 @@
 API for Kong Athurs Hotels værelsesreviews
 
 ```
-docker build -t ka-reviews
+docker build -t ka-reviews https://github.com/ITA-Super-Cool-Pals/ka-reviews.git#main
 ```
 
 ```
