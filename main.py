@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return 'Reviews service'
+    return jsonify('Reviews service')
 
 # Get all reviews
 @app.route('/reviews', methods=['GET'])
@@ -32,7 +32,7 @@ def get_reviews_by_room(room_id):
     # check if room exists
     room = requests.get('http://ka-rooms:5000/rooms/' + str(room_id))
     if room.status_code != 200:
-        return 'Room not found', 404
+        return jsonify('Room not found'), 404
 
     reviews = db_service.read_by_room(room_id)
     return jsonify(reviews), 200
@@ -44,7 +44,7 @@ def get_reviews_by_guest(guest_id):
     # check if guest exists
     guest = requests.get('http://ka-guests:5000/guests/' + str(guest_id))
     if guest.status_code != 200:
-        return 'Guest not found', 404
+        return jsonify('Guest not found'), 404
     
     reviews = db_service.read_by_guest(guest_id)
     return jsonify(reviews), 200
@@ -57,22 +57,22 @@ def create_review():
     # check if room exists
     room = requests.get('http://ka-rooms:5000/rooms/' + str(review['RoomId']))
     if room.status_code != 200:
-        return 'Room not found', 404
+        return jsonify('Room not found'), 404
     
     # check if guest exists
     guest = requests.get('http://ka-guests:5000/guests/' + str(review['GuestId']))
     if guest.status_code != 200:
-        return 'Guest not found', 404
+        return jsonify('Guest not found'), 404
     
     # Check if the guest already reviewed this room
     reviews_for_room = db_service.read_by_room(review['RoomId'])
     for r in reviews_for_room:
         if r['GuestId'] == review['GuestId']:
-            return 'Guest already reviewed this room', 400
+            return jsonify('Guest already reviewed this room'), 400
 
 
     db_service.create(review)
-    return 'Review created', 201
+    return jsonify('Review created'), 201
 
 if __name__ == '__main__':
     db_service.init()  # Ensure the database is initialized before running
