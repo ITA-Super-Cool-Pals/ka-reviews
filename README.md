@@ -2,11 +2,11 @@
 API for Kong Athurs Hotels værelsesreviews
 
 ```
-docker build -t ka-reviews
+docker build -t ka-reviews https://github.com/ITA-Super-Cool-Pals/ka-reviews.git#main
 ```
 
 ```
-docker run --rm -p 5003:5000 -v /path/to/db/dir:/app/app-db --name -ka-reviews -d ka-reviews
+docker run --rm -p 5003:5000 -v ./ka-app:/app/app-db --name -ka-reviews -d ka-reviews
 ```
 
 ## API Endpoints
